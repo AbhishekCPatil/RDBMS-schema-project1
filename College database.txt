@@ -1,0 +1,117 @@
+CREATE DATABASE College;
+USE college;
+
+#1111111111111111111111111111111111111
+CREATE TABLE Department
+(
+Dept_Id INT,
+Dept CHAR(10),
+PRIMARY KEY (Dept_Id)
+);
+SELECT * FROM Department;
+
+#2222222222222222222222222222222222222
+CREATE TABLE Dept_Principal
+(
+Dept_Principal_Id INT PRIMARY KEY,
+Dept_Principal CHAR(20),
+Dept_Id INT,
+FOREIGN KEY(Dept_Id) REFERENCES Department(Dept_Id)
+);
+SELECT * FROM Dept_Principal;
+
+#33333333333333333333333333333333333333
+CREATE TABLE Branch
+(
+Branch_Id INT,
+Branch CHAR(10),
+Branch_HOD CHAR(15),
+Dept_Id INT,
+PRIMARY KEY (Branch_Id),
+FOREIGN KEY(Dept_Id) REFERENCES Department(Dept_Id)
+);
+SELECT * FROM Branch
+
+#444444444444444444444444444444444444
+CREATE TABLE Student_Info
+(
+Std_Id INT,
+Branch_Id INT,
+Std_FName VARCHAR(10),
+Std_LName VARCHAR(10),
+Std_Mobile_No INT,
+Std_Address VARCHAR(30),
+Std_Blood_Group VARCHAR(5),
+Std_Semester INT,
+Std_Aggregate INT,
+PRIMARY KEY (Std_Id),
+FOREIGN KEY(Branch_Id) REFERENCES Branch(Branch_Id)
+);
+SELECT * FROM Student_Info;
+
+#555555555555555555555555555555555555555
+CREATE TABLE Student_Placement
+(
+Std_Id INT,
+Placement_Attended CHAR(1),
+Plced CHAR(1),
+FOREIGN KEY(Std_Id) REFERENCES Student_Info(Std_Id)
+);
+SELECT * FROM Student_Placement;
+
+#66666666666666666666666666666666666666
+CREATE TABLE College_Fest
+(
+Dept_Principal_Id INT, #Chief Coordinator
+Branch_Id INT, #Performers
+Cultural_Event VARCHAR(15), #Type of program
+FOREIGN KEY(Dept_Principal_Id) REFERENCES Dept_Principal(Dept_Principal_Id),
+FOREIGN KEY(Branch_Id) REFERENCES Branch(Branch_Id)
+);
+SELECT * FROM College_Fest;
+
+***********************************
+#Value Insertion
+
+#1
+INSERT INTO Department VALUES(1,'MBA'),(2,'Engg'),(3,'BSc');
+
+#2
+INSERT INTO Dept_Principal VALUES(11,'Jeff Bezos',1),
+(22,'Robert Downy Jr.',2),(33,'Nikola Tesla',3);
+
+#3
+INSERT INTO Branch VALUES
+(101,'Finance','Amitabh B',1),(102,'HR','Aishwarya rai',1),(103,'Marketing','Abhishek B',1);
+INSERT INTO Branch VALUES
+(201,'ME','Tony Stark',2),(202,'CS','Steve Jobs',2),(203,'ECE','Elon Musk',2);
+INSERT INTO Branch VALUES
+(301,'PCMB','Newton',3),(302,'PCMC','Reynold',3),(303,'CBZ','Darwin',3);
+
+#4
+INSERT INTO Student_Info VALUES
+(501,101,'Ajay','Rao',9988,'2nd Main WNo 2 Udupi','O+',7,6);
+INSERT INTO Student_Info VALUES
+(502,101,'Rahul','R',887744556,'6th Main WNo 2 Karwar','O-',6,8);
+INSERT INTO Student_Info VALUES
+(503,102,'Riya','Sharma',887744556,'7th Main WNo 3 Mumbai','AB+',6,6);
+INSERT INTO Student_Info VALUES
+(6001,201,'Mohan','K',889955664,'8th road Mangalore','B+',8,7),
+(6002,202,'Komal','Roy',778899665,'Church street Lucknow','AB+',7,8),
+(6003,203,'Vinay','H',887744556,'ABC','AB-',6,5);
+INSERT INTO Student_Info VALUES
+(901,301,'Albert','Einstein',995544778,'Heaven Street','O+',6,9),
+(902,301,'Karl','Benz',993322114,'German Street','B-',5,6),
+(903,301,'Banner','Hulk',883322115,'Marvel Road Delhi','AB-',4,8);
+
+#5
+INSERT INTO Student_Placement VALUES
+(501,'Y','N'),(503,'N','n'),(6001,'Y','y'),(6003,'Y','N'),(901,'Y','Y'),(903,'N','N');
+
+#6
+INSERT INTO College_Fest VALUES
+(11,101,'Western Dance');
+INSERT INTO College_Fest VALUES
+(22,201,'Creative Ads');
+INSERT INTO College_Fest VALUES
+(33,301,'Drama');
